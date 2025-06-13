@@ -1,68 +1,162 @@
+/* Google Fonts - Legendary Typography */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* TailwindCSS v4 setup */
+@import "tailwindcss";
+
+/* Custom CSS Variables for our theme */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --browills-black: #000000;
+  --browills-white: #FFFFFF;
+  --browills-gray: #CCCCCC;
+}
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/* Global base styles */
+html {
+  scroll-behavior: smooth;
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+body {
+  background-color: var(--browills-black);
+  color: var(--browills-white);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+}
+
+/* Smooth scrolling and performance optimizations */
+* {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+/* Custom component classes */
+.hero-text {
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.heading-large {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.heading-medium {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+}
+
+.body-text {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+.section-padding {
+  padding: 6rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 6rem 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding: 6rem 6rem;
+  }
+}
+
+.container-custom {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.btn-primary {
+  background-color: var(--browills-white);
+  color: var(--browills-black);
+  padding: 1rem 2rem;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.btn-primary:hover {
+  background-color: var(--browills-gray);
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--browills-white);
+  border: 2px solid var(--browills-white);
+  padding: 1rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-secondary:hover {
+  background-color: var(--browills-white);
+  color: var(--browills-black);
+  transform: scale(1.05);
+}
+
+.card-hover {
+  transition: all 0.5s ease;
+}
+
+.card-hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Force select elements to have black background */
+select {
+  background-color: var(--browills-black) !important;
+  color: var(--browills-white) !important;
+}
+
+select option {
+  background-color: var(--browills-black) !important;
+  color: var(--browills-white) !important;
+}
+
+/* Additional styling for webkit browsers */
+select::-webkit-scrollbar {
+  background-color: var(--browills-black);
+}
+
+select::-webkit-scrollbar-thumb {
+  background-color: var(--browills-gray);
 }

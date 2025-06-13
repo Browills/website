@@ -1,65 +1,56 @@
 // src/App.tsx
 
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import cloudflareLogo from "./assets/Cloudflare_Logo.svg";
-import honoLogo from "./assets/hono.svg";
-import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import ServicesPage from './pages/ServicesPage';
+import StudioPage from './pages/StudioPage';
+import ProductsPage from './pages/ProductsPage';
+import BlogPage from './pages/BlogPage';
+import CareersPage from './pages/CareersPage';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
+import CookiesPage from './pages/CookiesPage';
+import GdprPage from './pages/GdprPage';
+import HelpCenterPage from './pages/HelpCenterPage';
+import DocumentationPage from './pages/DocumentationPage';
+
+// Blog posts
+import FutureAIEnterpriseBeyondAutomation from './pages/blog-posts/future-ai-enterprise-beyond-automation';
+import ZeroKnowledgeProofsPrivacyRevolution from './pages/blog-posts/zero-knowledge-proofs-privacy-revolution';
+import TokenomicsPlaybook from './pages/blog-posts/tokenomics-playbook';
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [name, setName] = useState("unknown");
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        <a href="https://hono.dev/" target="_blank">
-          <img src={honoLogo} className="logo cloudflare" alt="Hono logo" />
-        </a>
-        <a href="https://workers.cloudflare.com/" target="_blank">
-          <img
-            src={cloudflareLogo}
-            className="logo cloudflare"
-            alt="Cloudflare logo"
-          />
-        </a>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/studio" element={<StudioPage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/careers" element={<CareersPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/cookies" element={<CookiesPage />} />
+          <Route path="/gdpr" element={<GdprPage />} />
+          <Route path="/help-center" element={<HelpCenterPage />} />
+          <Route path="/documentation" element={<DocumentationPage />} />
+          
+          {/* Blog post routes */}
+          <Route path="/blog/future-ai-enterprise-beyond-automation" element={<FutureAIEnterpriseBeyondAutomation />} />
+          <Route path="/blog/zero-knowledge-proofs-privacy-revolution" element={<ZeroKnowledgeProofsPrivacyRevolution />} />
+          <Route path="/blog/tokenomics-playbook" element={<TokenomicsPlaybook />} />
+          
+          {/* Fallback route */}
+          <Route path="*" element={<HomePage />} />
+        </Routes>
       </div>
-      <h1>Vite + React + Hono + Cloudflare</h1>
-      <div className="card">
-        <button
-          onClick={() => setCount((count) => count + 1)}
-          aria-label="increment"
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <div className="card">
-        <button
-          onClick={() => {
-            fetch("/api/")
-              .then((res) => res.json() as Promise<{ name: string }>)
-              .then((data) => setName(data.name));
-          }}
-          aria-label="get name"
-        >
-          Name from API is: {name}
-        </button>
-        <p>
-          Edit <code>worker/index.ts</code> to change the name
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the logos to learn more</p>
-    </>
+    </Router>
   );
 }
 
