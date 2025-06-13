@@ -1,6 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import Layout from '../components/Layout/Layout';
-import { ShieldCheck, UserCheck, Clock } from 'lucide-react';
 
 const GdprPage: React.FC = () => {
   return (

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useForm } from 'react-hook-form';
-import emailjs from '@emailjs/browser';
 import Layout from '../components/Layout/Layout';
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, User, Building } from 'lucide-react';
 
 interface ContactFormData {
   name: string;
@@ -17,23 +15,42 @@ interface ContactFormData {
 const ContactPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>();
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: '',
+    email: '',
+    company: '',
+    projectType: 'services',
+    message: '',
+    budgetRange: ''
+  });
 
-  const onSubmit = async (data: ContactFormData) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
       // For demo purposes, we'll simulate email sending
       // In production, configure EmailJS with your service details
-      console.log('Form submitted:', data);
+      console.log('Form submitted:', formData);
       
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       setSubmitStatus('success');
-      reset();
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        projectType: 'services',
+        message: '',
+        budgetRange: ''
+      });
     } catch (error) {
       console.error('Error sending email:', error);
       setSubmitStatus('error');
@@ -199,7 +216,7 @@ const ContactPage: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <form onSubmit={onSubmit} className="space-y-6">
                 <div>
                   <h2 className="heading-large text-browills-white mb-8">Send Us a Message</h2>
                 </div>
@@ -211,13 +228,12 @@ const ContactPage: React.FC = () => {
                   </label>
                   <input
                     type="text"
-                    {...register('name', { required: 'Name is required' })}
+                    value={formData.name}
+                    onChange={handleChange}
+                    name="name"
                     className="w-full px-4 py-3 bg-browills-black border-2 border-browills-gray/20 text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300"
                     placeholder="Your full name"
                   />
-                  {errors.name && (
-                    <p className="mt-2 text-red-400 font-inter text-sm">{errors.name.message}</p>
-                  )}
                 </div>
 
                 {/* Email */}
@@ -227,19 +243,12 @@ const ContactPage: React.FC = () => {
                   </label>
                   <input
                     type="email"
-                    {...register('email', { 
-                      required: 'Email is required',
-                      pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: 'Invalid email address'
-                      }
-                    })}
+                    value={formData.email}
+                    onChange={handleChange}
+                    name="email"
                     className="w-full px-4 py-3 bg-browills-black border-2 border-browills-gray/20 text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300"
                     placeholder="your.email@company.com"
                   />
-                  {errors.email && (
-                    <p className="mt-2 text-red-400 font-inter text-sm">{errors.email.message}</p>
-                  )}
                 </div>
 
                 {/* Company */}
@@ -249,7 +258,9 @@ const ContactPage: React.FC = () => {
                   </label>
                   <input
                     type="text"
-                    {...register('company')}
+                    value={formData.company}
+                    onChange={handleChange}
+                    name="company"
                     className="w-full px-4 py-3 bg-browills-black border-2 border-browills-gray/20 text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300"
                     placeholder="Your company name"
                   />
@@ -261,7 +272,9 @@ const ContactPage: React.FC = () => {
                     Project Type *
                   </label>
                   <select
-                    {...register('projectType', { required: 'Please select a project type' })}
+                    value={formData.projectType}
+                    onChange={handleChange}
+                    name="projectType"
                     className="w-full px-4 py-3 bg-browills-black border-2 border-browills-gray/20 text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300 [&>option]:bg-browills-black [&>option]:text-browills-white"
                     style={{ 
                       backgroundColor: '#000000',
@@ -276,9 +289,6 @@ const ContactPage: React.FC = () => {
                       </option>
                     ))}
                   </select>
-                  {errors.projectType && (
-                    <p className="mt-2 text-red-400 font-inter text-sm">{errors.projectType.message}</p>
-                  )}
                 </div>
 
                 {/* Budget Range */}
@@ -287,7 +297,9 @@ const ContactPage: React.FC = () => {
                     Budget Range
                   </label>
                   <select
-                    {...register('budgetRange')}
+                    value={formData.budgetRange}
+                    onChange={handleChange}
+                    name="budgetRange"
                     className="w-full px-4 py-3 bg-browills-black border-2 border-browills-gray/20 text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300 [&>option]:bg-browills-black [&>option]:text-browills-white"
                     style={{ 
                       backgroundColor: '#000000',
@@ -310,14 +322,13 @@ const ContactPage: React.FC = () => {
                     Message *
                   </label>
                   <textarea
-                    {...register('message', { required: 'Message is required' })}
+                    value={formData.message}
+                    onChange={handleChange}
+                    name="message"
                     rows={6}
                     className="w-full px-4 py-3 bg-browills-black border-2 border-browills-gray/20 text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300 resize-vertical"
                     placeholder="Tell us about your project, challenges, and how we can help..."
                   />
-                  {errors.message && (
-                    <p className="mt-2 text-red-400 font-inter text-sm">{errors.message.message}</p>
-                  )}
                 </div>
 
                 {/* Submit Button */}
@@ -337,7 +348,7 @@ const ContactPage: React.FC = () => {
                     ) : (
                       <>
                         <span>Send Message</span>
-                        <Send className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                        <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
                       </>
                     )}
                   </motion.button>

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import Layout from '../components/Layout/Layout';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
 
-import { blogPosts, categories, BlogPost } from '../data/blogPosts';
+import { blogPosts, categories } from '../data/blogPosts';
 
 const BlogPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = React.useState('All');

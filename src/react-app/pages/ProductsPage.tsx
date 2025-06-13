@@ -3,17 +3,15 @@ import { motion } from 'framer-motion';
 import Layout from '../components/Layout/Layout';
 import { 
   CreditCard, 
-  Database, 
+  Link as LinkIcon, 
   Globe, 
-  Shield, 
   Users, 
-  TrendingUp, 
+  ExternalLink, 
   ArrowRight, 
-  ExternalLink,
   Building,
+  Briefcase,
   Smartphone,
-  Lock,
-  Layers
+  Database
 } from 'lucide-react';
 
 const ProductsPage: React.FC = () => {

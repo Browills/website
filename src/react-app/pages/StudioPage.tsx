@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from '../components/Layout/Layout';
-import { ExternalLink, Briefcase, ArrowRight, Rocket, Users, Target, Zap } from 'lucide-react';
+import { ExternalLink, ArrowRight, Rocket, Target } from 'lucide-react';
 
 const StudioPage: React.FC = () => {
   const portfolioProjects = [
@@ -115,12 +115,12 @@ const StudioPage: React.FC = () => {
       description: 'Our team becomes your technical co-founder, building your product in exchange for equity partnership.'
     },
     {
-      icon: <Users className="h-8 w-8" />,
+      icon: <Target className="h-8 w-8" />,
       title: 'Full-stack Support',
       description: 'From technology to tokenomics, branding to go-to-market strategy, we provide comprehensive startup support.'
     },
     {
-      icon: <Zap className="h-8 w-8" />,
+      icon: <Target className="h-8 w-8" />,
       title: 'Engineering + Product Teams',
       description: 'Access to our experienced engineering and product teams on-demand, scaling with your needs.'
     }

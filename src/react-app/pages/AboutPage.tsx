@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from '../components/Layout/Layout';
-import { Target, Eye, Heart, Zap, Users, Globe } from 'lucide-react';
+import { Heart, Zap, Users, Globe } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
   const values = [

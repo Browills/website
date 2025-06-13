@@ -3,11 +3,10 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { 
   Brain, 
-  Rocket, 
-  Settings, 
-  ArrowRight,
-  Zap,
-  Building2
+  Code2, 
+  Shield, 
+  Users,
+  ArrowRight 
 } from 'lucide-react';
 
 const ServicesSection: React.FC = () => {
@@ -29,7 +28,7 @@ const ServicesSection: React.FC = () => {
     },
     {
       id: 'studio',
-      icon: <Rocket className="h-12 w-12" />,
+      icon: <Code2 className="h-12 w-12" />,
       title: 'Venture Studio',
       description: 'We co-build frontier tech startups from zero to one. Your idea, our partnership, execution together.',
       features: [
@@ -44,7 +43,7 @@ const ServicesSection: React.FC = () => {
     },
     {
       id: 'products',
-      icon: <Settings className="h-12 w-12" />,
+      icon: <Shield className="h-12 w-12" />,
       title: 'Products',
       description: 'Battle-tested tools born from real problems we\'ve solved. Available as Products and licensed APIs.',
       features: [

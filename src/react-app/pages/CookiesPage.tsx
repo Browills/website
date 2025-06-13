@@ -1,6 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import Layout from '../components/Layout/Layout';
-import { Cookie, Settings, Clock } from 'lucide-react';
 
 const CookiesPage: React.FC = () => {
   return (

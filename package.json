@@ -46,13 +46,14 @@
     "wrangler": "4.16.1"
   },
   "scripts": {
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "cf-typegen": "wrangler types",
     "check": "tsc && vite build && wrangler deploy --dry-run",
     "deploy": "wrangler deploy",
     "dev": "vite",
     "lint": "eslint .",
-    "preview": "npm run build && vite preview"
+    "preview": "npm run build && vite preview",
+    "typecheck": "tsc -b"
   },
   "type": "module"
 }
