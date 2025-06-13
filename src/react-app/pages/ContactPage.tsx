@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Layout from '../components/Layout/Layout';
-import { Mail, Phone, MapPin, ArrowRight, User, Building } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, User, Building, CheckCircle, AlertCircle } from 'lucide-react';
 
 interface ContactFormData {
   name: string;

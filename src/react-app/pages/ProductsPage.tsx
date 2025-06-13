@@ -11,7 +11,9 @@ import {
   Building,
   Briefcase,
   Smartphone,
-  Database
+  Database,
+  TrendingUp,
+  Lock
 } from 'lucide-react';
 
 const ProductsPage: React.FC = () => {
