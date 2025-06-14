@@ -190,9 +190,14 @@ const ContactPage: React.FC = () => {
                     <MapPin className="h-6 w-6 text-browills-white flex-shrink-0" />
                     <div>
                       <h3 className="text-lg font-playfair font-black text-browills-white">Office</h3>
-                      <p className="text-browills-gray font-inter font-semibold">
-                        London, United Kingdom
-                      </p>
+                      <a
+                        href="https://g.co/kgs/Wx5rd7L"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-browills-gray hover:text-browills-white hover:text-glow transition-all duration-300 font-inter font-semibold"
+                      >
+                        Browills Limited UK, 2287, 182-184 High St N, London E6 2JA, United Kingdom
+                      </a>
                     </div>
                   </motion.div>
                 </div>
