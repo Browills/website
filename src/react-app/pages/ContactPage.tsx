@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Layout from '../components/Layout/Layout';
 import { Mail, Phone, MapPin, ArrowRight, User, Building, CheckCircle, AlertCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG, EmailTemplateParams } from '../config/emailjs.config';
 
 interface ContactFormData {
   name: string;
@@ -35,12 +37,25 @@ const ContactPage: React.FC = () => {
     setSubmitStatus('idle');
 
     try {
-      // For demo purposes, we'll simulate email sending
-      // In production, configure EmailJS with your service details
-      console.log('Form submitted:', formData);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Prepare template parameters
+      const templateParams: EmailTemplateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        company: formData.company || 'Not specified',
+        project_type: formData.projectType,
+        budget_range: formData.budgetRange || 'Not specified',
+        message: formData.message,
+        submission_date: new Date().toLocaleString(),
+        to_email: EMAILJS_CONFIG.toEmail
+      };
+
+      // Send email using EmailJS
+      await emailjs.send(
+        EMAILJS_CONFIG.serviceId, 
+        EMAILJS_CONFIG.templateId, 
+        templateParams, 
+        EMAILJS_CONFIG.publicKey
+      );
       
       setSubmitStatus('success');
       setFormData({
