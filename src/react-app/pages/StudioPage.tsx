@@ -49,7 +49,7 @@ const StudioPage: React.FC = () => {
     },
     {
       name: 'Smart Escrow',
-      logo: '/Logos/smartescrow.jpg',
+      logo: '/Logos/smartescrow.png',
       url: 'https://smartescrow.org',
       description: 'On-chain escrow platform on Polygon'
     },
@@ -61,7 +61,7 @@ const StudioPage: React.FC = () => {
     },
     {
       name: 'Infosume',
-      logo: '/Logos/infosume.jpg',
+      logo: '/Logos/infosume.png',
       url: 'https://infosume.com',
       description: 'Professional networking platform'
     },
