@@ -26,6 +26,7 @@ const ContactPage: React.FC = () => {
     budgetRange: ''
   });
   const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [showValidationAlert, setShowValidationAlert] = useState(false);
 
   const validateForm = () => {
     const newErrors: {[key: string]: string} = {};
@@ -60,6 +61,20 @@ const ContactPage: React.FC = () => {
            formData.projectType;
   };
 
+  const getValidationMessage = () => {
+    const errorFields = [];
+    if (!formData.name.trim()) errorFields.push('Name');
+    if (!formData.email.trim()) errorFields.push('Email');
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errorFields.push('Valid Email');
+    if (!formData.message.trim()) errorFields.push('Message');
+    if (!formData.projectType) errorFields.push('Project Type');
+    
+    if (errorFields.length === 0) return '';
+    if (errorFields.length === 1) return `Please enter a ${errorFields[0].toLowerCase()}`;
+    if (errorFields.length === 2) return `Please enter ${errorFields[0].toLowerCase()} and ${errorFields[1].toLowerCase()}`;
+    return `Please fill in: ${errorFields.slice(0, -1).join(', ')} and ${errorFields[errorFields.length - 1]}`;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -68,17 +83,26 @@ const ContactPage: React.FC = () => {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+    
+    // Hide validation alert when user starts fixing issues
+    if (showValidationAlert) {
+      setShowValidationAlert(false);
+    }
   };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) {
+      setShowValidationAlert(true);
+      // Auto-hide alert after 5 seconds
+      setTimeout(() => setShowValidationAlert(false), 5000);
       return;
     }
     
     setIsSubmitting(true);
     setSubmitStatus('idle');
+    setShowValidationAlert(false);
 
     try {
       // Prepare template parameters
@@ -403,10 +427,10 @@ const ContactPage: React.FC = () => {
                 <div className="pt-4">
                   <motion.button
                     type="submit"
-                    disabled={isSubmitting || !isFormValid()}
+                    disabled={isSubmitting}
                     className="w-full btn-primary flex items-center justify-center space-x-3 group text-xl py-4 disabled:opacity-50 disabled:cursor-not-allowed"
-                    whileHover={{ scale: (isSubmitting || !isFormValid()) ? 1 : 1.02 }}
-                    whileTap={{ scale: (isSubmitting || !isFormValid()) ? 1 : 0.98 }}
+                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                   >
                     {isSubmitting ? (
                       <>
@@ -421,6 +445,21 @@ const ContactPage: React.FC = () => {
                     )}
                   </motion.button>
                 </div>
+
+                {/* Validation Alert */}
+                {showValidationAlert && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className="flex items-center space-x-3 p-4 bg-orange-900/20 border border-orange-500/20 text-orange-400"
+                  >
+                    <AlertCircle className="h-5 w-5" />
+                    <span className="font-inter font-semibold">
+                      {getValidationMessage()}
+                    </span>
+                  </motion.div>
+                )}
 
                 {/* Status Messages */}
                 {submitStatus === 'success' && (
