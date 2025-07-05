@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Clock } from 'lucide-react';
 import Layout from '../components/Layout/Layout';
 
 const TermsPage: React.FC = () => {

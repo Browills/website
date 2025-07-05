@@ -9,7 +9,7 @@ interface ContactFormData {
   name: string;
   email: string;
   company?: string;
-  projectType: 'services' | 'studio' | 'products';
+  projectType: 'services' | 'studio' | 'products' | '';
   message: string;
   budgetRange?: string;
 }
@@ -21,18 +21,62 @@ const ContactPage: React.FC = () => {
     name: '',
     email: '',
     company: '',
-    projectType: 'services',
+    projectType: '',
     message: '',
     budgetRange: ''
   });
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
+
+  const validateForm = () => {
+    const newErrors: {[key: string]: string} = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    }
+    
+    if (!formData.projectType) {
+      newErrors.projectType = 'Project type is required';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const isFormValid = () => {
+    return formData.name.trim() !== '' && 
+           formData.email.trim() !== '' && 
+           /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) &&
+           formData.message.trim() !== '' &&
+           formData.projectType;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -62,7 +106,7 @@ const ContactPage: React.FC = () => {
         name: '',
         email: '',
         company: '',
-        projectType: 'services',
+        projectType: '',
         message: '',
         budgetRange: ''
       });
@@ -251,9 +295,10 @@ const ContactPage: React.FC = () => {
                     value={formData.name}
                     onChange={handleChange}
                     name="name"
-                    className="w-full px-4 py-3 bg-browills-black border-2 border-browills-gray/20 text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300"
+                    className={`w-full px-4 py-3 bg-browills-black border-2 ${errors.name ? 'border-red-500' : 'border-browills-gray/20'} text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300`}
                     placeholder="Your full name"
                   />
+                  {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
                 </div>
 
                 {/* Email */}
@@ -266,9 +311,10 @@ const ContactPage: React.FC = () => {
                     value={formData.email}
                     onChange={handleChange}
                     name="email"
-                    className="w-full px-4 py-3 bg-browills-black border-2 border-browills-gray/20 text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300"
+                    className={`w-full px-4 py-3 bg-browills-black border-2 ${errors.email ? 'border-red-500' : 'border-browills-gray/20'} text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300`}
                     placeholder="your.email@company.com"
                   />
+                  {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
                 </div>
 
                 {/* Company */}
@@ -295,13 +341,13 @@ const ContactPage: React.FC = () => {
                     value={formData.projectType}
                     onChange={handleChange}
                     name="projectType"
-                    className="w-full px-4 py-3 bg-browills-black border-2 border-browills-gray/20 text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300 [&>option]:bg-browills-black [&>option]:text-browills-white"
+                    className={`w-full px-4 py-3 bg-browills-black border-2 ${errors.projectType ? 'border-red-500' : 'border-browills-gray/20'} text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300 [&>option]:bg-browills-black [&>option]:text-browills-white`}
                     style={{ 
                       backgroundColor: '#000000',
                       color: '#FFFFFF',
                       colorScheme: 'dark'
                     }}
-                  >
+                                      >
                     <option value="" className="bg-browills-black text-browills-white" style={{ backgroundColor: '#000000', color: '#FFFFFF' }}>Select project type</option>
                     {projectTypes.map((type) => (
                       <option key={type.value} value={type.value} className="bg-browills-black text-browills-white" style={{ backgroundColor: '#000000', color: '#FFFFFF' }}>
@@ -309,6 +355,7 @@ const ContactPage: React.FC = () => {
                       </option>
                     ))}
                   </select>
+                  {errors.projectType && <p className="text-red-400 text-sm mt-1">{errors.projectType}</p>}
                 </div>
 
                 {/* Budget Range */}
@@ -346,19 +393,20 @@ const ContactPage: React.FC = () => {
                     onChange={handleChange}
                     name="message"
                     rows={6}
-                    className="w-full px-4 py-3 bg-browills-black border-2 border-browills-gray/20 text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300 resize-vertical"
+                    className={`w-full px-4 py-3 bg-browills-black border-2 ${errors.message ? 'border-red-500' : 'border-browills-gray/20'} text-browills-white font-inter focus:border-browills-white focus:outline-none transition-colors duration-300 resize-vertical`}
                     placeholder="Tell us about your project, challenges, and how we can help..."
                   />
+                  {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message}</p>}
                 </div>
 
                 {/* Submit Button */}
                 <div className="pt-4">
                   <motion.button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !isFormValid()}
                     className="w-full btn-primary flex items-center justify-center space-x-3 group text-xl py-4 disabled:opacity-50 disabled:cursor-not-allowed"
-                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                    whileHover={{ scale: (isSubmitting || !isFormValid()) ? 1 : 1.02 }}
+                    whileTap={{ scale: (isSubmitting || !isFormValid()) ? 1 : 0.98 }}
                   >
                     {isSubmitting ? (
                       <>
