@@ -159,7 +159,7 @@ const Footer: React.FC = () => {
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0 w-full">
             <p className="text-sm text-browills-gray">
-              © 2025 Browills. All rights reserved.
+              © 2025 Browills Limited UK.
             </p>
             <p className="text-sm text-browills-gray">
               info@browills.com | +44 7360 498963
