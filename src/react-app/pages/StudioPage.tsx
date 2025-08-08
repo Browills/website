@@ -63,7 +63,7 @@ const StudioPage: React.FC = () => {
       name: 'Infosume',
       logo: '/Logos/infosume.png',
       url: 'https://infosume.com',
-      description: 'Professional networking platform'
+      description: 'AI Career Infrastructure'
     },
     {
       name: 'Milliongram',
